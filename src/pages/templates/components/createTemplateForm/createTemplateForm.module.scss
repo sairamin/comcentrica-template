@@ -1,0 +1,13 @@
+.templateName {
+  margin-bottom: 2.4rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2.4rem;
+}
+
+.button + .button {
+  margin-left: 2.4rem;
+}
