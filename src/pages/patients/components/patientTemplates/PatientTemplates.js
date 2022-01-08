@@ -40,7 +40,7 @@ function PatientTemplates({ visible, patient, onClose }) {
   };
 
   useEffect(() => {
-    const content = selectedTemplate?.content
+    const content = selectedTemplate?.text
     const parsedContent = parseTemplate(content, patient)
     setEditorContent(parsedContent)
   }, [selectedTemplate, patient])

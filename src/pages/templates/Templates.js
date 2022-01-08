@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 // Components
 import Table from "../../components/table";
@@ -12,6 +14,14 @@ import COLUMNS from "./constants/templates.columns";
 import styles from "./templates.module.scss";
 
 function Templates() {
+  useEffect(() => {
+    axios.get('http://localhost:3000/templates').then((response) => {
+      dispatch(addTemplate(response.data.results))
+    }).catch((error) => {
+      console.log(`Error fetchign templates: ${error}`)
+    })
+  }, [])
+
   const templatesFromStore = useSelector(
     (state) => state.templates.items || []
   );
@@ -30,10 +40,20 @@ function Templates() {
   };
 
   const handeSaveTemplate = (templateContent) => {
-    dispatch(
-      addTemplate(templateContent)
-    );
-    setCreateTemplateFormVisibility(false)
+    axios
+      .post("http://localhost:3000/templates", {
+        id: uuidv4(),
+        name: templateContent.name,
+        text: templateContent.text,
+      })
+      .then(() => {
+        dispatch(addTemplate([templateContent]));
+      })
+      .catch((error) => {
+        console.log(`Error creating template: ${error}`);
+      });
+
+    setCreateTemplateFormVisibility(false);
   };
 
   return (
@@ -41,7 +61,7 @@ function Templates() {
       <div className={styles.tableActions}>
         <Button onClick={handleOpenCreateTemplateForm}>Add Template</Button>
       </div>
-      <Table data={templatesFromStore} columns={COLUMNS}/>
+      <Table data={templatesFromStore} columns={COLUMNS} />
       <CreateTemplateForm
         visible={createTemplateFormVisible}
         onClose={handleCloseCreateTemplateForm}

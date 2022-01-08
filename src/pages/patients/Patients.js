@@ -29,7 +29,6 @@ function Patients() {
   };
 
   const handleOpenPatientTemplates = (record) => () => {
-    console.log(record)
     setSeletedPatient(record)
     setPatientTemplatesVisibility(true)
   }

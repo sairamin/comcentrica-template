@@ -21,7 +21,7 @@ function CreateTemplateForm({ visible, onClose, onSaveTemplate }) {
   const handleSaveTemplate = () => {
     onSaveTemplate({
       name: templateName,
-      content: templateContent,
+      text: templateContent,
     });
   };
 

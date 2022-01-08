@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import TEMPLATES from '../constants/mockData';
 
 const INITIAL_STATE = {
-  items: TEMPLATES,
+  items: [],
 };
 
 const templateSlice = createSlice({
@@ -11,7 +10,7 @@ const templateSlice = createSlice({
   reducers: {
     addTemplate: (state, action) => {
       console.log(action)
-      state.items.push(action.payload);
+      state.items.push(...action.payload);
     },
   },
 });
